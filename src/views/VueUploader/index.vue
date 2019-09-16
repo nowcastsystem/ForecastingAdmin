@@ -84,15 +84,15 @@
         </div>
         <div class="btn-group">
           <file-upload
+            ref="upload"
+            v-model="files"
             class="btn btn-primary dropdown-toggle"
             :post-action="postAction"
             :put-action="putAction"
             :extensions="extensions"
             :accept="accept"
-            v-model="files"
             :multiple="multiple"
             :directory="directory"
-            ref="upload"
             :size="size || 0"
             :thread="thread < 1 ? 1 : (thread > 5 ? 5 : thread)"
             :headers="headers"
@@ -321,10 +321,10 @@ export default {
       postAction: '/upload/post',
       putAction: 'http://localhost:8010/uploader',
       headers: {
-        // 'X-Csrf-Token': 'xxxx',
+        'X-Csrf-Token': 'xxxx'
       },
       data: {
-        // '_csrf_token': 'xxxxxx',
+        '_csrf_token': 'xxxxxx'
       },
       autoCompress: 1024 * 1024,
       uploadAuto: false,
@@ -516,13 +516,24 @@ export default {
     },
 
     onSendAnalyzeRequest() {
+      this.$router.push({ name: 'analyze' })
       this.listLoading = true
       sendAnalyzeRequest().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+        // console.log("success!")
+        // console.log(response['token'])
+        // this.list = response.data.items
+        // this.listLoading = false
+        /*eslint-disable*/ 
+        token = response['token']
         // if the response from the server indicating that it's running the analysis, then redirect to a loading view
         if (this.list.indexOf('anylyzing') >= 0) {
           // this.$router.push('@/views/Analyzing/analyzing')
+
+          // sendAnalyzeRequest().then(response => {
+          //   this.list = response.data.items
+          //   this.listLoading = false
+
+          // }
         }
       })
     }
