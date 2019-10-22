@@ -5,15 +5,15 @@
     <i class="fa fa-cog" aria-hidden="true"></i>
     Options
   </button> -->
-  <h1 id="example-title" class="example-title">Data Uploader</h1>
+  <h1 id="example-title" class="example-title" style="color: white">Data Uploader</h1>
 
   <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
     <h3>Drop files to upload</h3>
   </div>
   <div class="upload" v-show="!isOption">
-    <div class="table-responsive" style="height: 400px">
-      <table class="table table-hover">
-        <thead>
+    <div class="table-responsive" style="height: 400px;">
+      <table class="table table-hover table-dark" style="color: white">
+        <thead style="background-color: #313436;">
           <tr>
             <th>#</th>
             <th>Thumb</th>
@@ -50,7 +50,8 @@
             <td>{{file.size | formatSize}}</td>
             <td>{{file.speed | formatSize}}</td>
 
-            <td v-if="file.error">{{file.error}}</td>
+            <!-- <td v-if="file.error">{{file.error}}</td> -->
+            <td v-if="file.error">fail: wrong format</td>
             <td v-else-if="file.success">success</td>
             <td v-else-if="file.active">active</td>
             <td v-else></td>
@@ -531,32 +532,11 @@ export default {
     },
 
     onSendAnalyzeRequest() {
-        // var k = [100, 120, 161, 134, 105, 160, 165,190,200]
 
 
         this.$router.push({ name: "analyze" })
         this.listLoading = true
         sendAnalyzeRequest().then(response => {
-          //         this.$router.push({ name: "plotTest", params: {
-          // past: {
-          //   yAxisData: [100, 120, 161, 134, 105, 160, 165, 190,200,250],
-          //   xAxisData: ['2019-7-13', '2019-7-14', '2019-7-15', '2019-7-16', '2019-7-17', '2019-7-18', '2019-7-19', '2019-7-20','2019-7-21','2019-7-22'] ,
-          //   label: 'Past',
-          //   colorPicked: '#999997',
-          //   twoLines: true,
-          //   yAxisData2: [30, 140, 150, 200, 150, 170, 165, 170,150,230],
-          //   label2: 'Prediction',
-          //   colorPicked2: '#999997'
-          // },
-          // future: {
-          //   yAxisData: [260, 230, 270, 285, 295, 300, 310,330],
-          //   xAxisData: ['2019-8-13', '2019-8-14', '2019-8-15', '2019-8-16', '2019-8-17', '2019-8-18', '2019-8-19', '2019-8-20'] ,
-          //   label: 'Future',
-          //   colorPicked: '#519e19'
-          // }
-          // }})
-
-
         var token = response['token']
         var future = response['future']
         var past = response['past']
@@ -581,6 +561,11 @@ export default {
 
 <style>
 @import '~bootstrap/dist/css/bootstrap.min.css';
+
+.example-full {
+  color: #19191a;
+  background-color: #26293c;
+}
 .example-full .btn-group .dropdown-menu {
   display: block;
   visibility: hidden;
