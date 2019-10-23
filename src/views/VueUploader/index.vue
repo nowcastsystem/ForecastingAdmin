@@ -7,7 +7,7 @@
   </button> -->
   <div style="overflow: hidden;">
   <h1 id="example-title" class="example-title" style="color: white; display: inline-block; float: left;">Data Uploader</h1>
-  <a href="#" style="display: inline-block; margin-top: 23px; margin-left: 2px" class="badge badge-info" data-toggle="modal" data-target="#exampleModal">Format Guide</a>
+  <a href="#" style="display: inline-block; margin-top: 23px; margin-left: 2px" class="badge badge-light" data-toggle="modal" data-target="#exampleModal">Format Guide</a>
   <!-- <button type="button" class="btn btn-outline-primary" style="display: inline !important;" data-toggle="modal" data-target="#exampleModal">
   Format Guide
   </button> -->
@@ -615,8 +615,8 @@ export default {
 }
 .example-full .example-foorer {
   padding: .5rem 0;
-  border-top: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 }
 .example-full .edit-image img {
   max-width: 100%;

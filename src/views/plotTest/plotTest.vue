@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="dashboard-editor-container">
-      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-row style="background:#fff;padding:0;margin-bottom:32px;">
         <!-- <line-chart :chart-data="{xAxisData, yAxisData, label}" /> -->
-        <h2>Prediction Plot</h2>
-        <line-chart :chart-data="future" />
-        <h2>History Plot</h2>
-        <line-chart :chart-data="past" />
+        <!-- <h2>Prediction Plot</h2> -->
+        <line-chart2 :chart-data="future" />
+        <!-- <h2>History Plot</h2> -->
+        <line-chart2 :chart-data="past" />
       </el-row>
     </div>
     <div>
@@ -16,6 +16,7 @@
 
 <script>
 import LineChart from '@/views/dashboard/admin/components/LineChart'
+import LineChart2 from '@/views/plotTest/components/LineChart2'
 import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
 import RaddarChart from '@/views/dashboard/admin/components/RaddarChart'
@@ -41,6 +42,7 @@ export default {
     GithubCorner,
     PanelGroup,
     LineChart,
+    LineChart2,
     RaddarChart,
     PieChart,
     BarChart,
