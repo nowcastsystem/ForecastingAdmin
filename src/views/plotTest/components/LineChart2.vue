@@ -10,7 +10,8 @@ import { toolbox as features } from 'echarts/lib/langEN'
 // require('echarts/theme/dark')
 // require('echarts/theme/halloween')
 // require('echarts/theme/chalk')
-require('echarts/theme/dark2')
+// require('echarts/theme/dark2')
+require('@/views/plotTest/themes/dark2')
 import resize from './mixins/resize'
 
 export default {
@@ -232,9 +233,6 @@ export default {
                 dataView: {
                     title: "view data",
                     lang: ['Data Viewer', 'Close', 'Refresh']
-                },
-                restore: {
-                    title: "restore"
                 },
                 saveAsImage: {
                     title: "save"

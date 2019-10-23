@@ -51,7 +51,6 @@ export default {
     BoxCard
   },
   props: {
-    twoLines: true,
     past: {
       xAxisData: {
         default: ['a', 'x', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -78,21 +77,6 @@ export default {
         default: '#999997'
       }
     },
-    past_predict: {
-      xAxisData: {
-        default: [120, 82, 91, 154, 162, 140, 145,230]
-      },
-      yAxisData: {
-        default: ['a', 'x', 'c', 'd', 'e', 'f', 'g', 'h']
-      },
-      label: {
-        default: 'Future'
-      },
-      colorPicked: {
-        default: '#999997'
-      }
-    },
-
     future: {
       xAxisData: {
         default: [120, 82, 91, 154, 162, 140, 145,230]
@@ -109,6 +93,25 @@ export default {
     }
 
   },
+  watch: {
+    past: {
+      immediate: true,
+      handler() {
+        console.log()
+        localStorage.setItem('past', this.past)
+      }
+    },
+    future: {
+      immediate: true,
+      handler() {
+        localStorage.setItem('future', this.future)
+      }
+    },
+  },
+  // mounted() {
+  //   this.past = localStorage.getItem('past');
+  //   this.future = localStorage.getItem('future');
+  // },
   data() {
     return {
       lineChartData: lineChartData.newVisitis
