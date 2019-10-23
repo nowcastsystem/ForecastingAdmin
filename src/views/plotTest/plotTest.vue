@@ -4,9 +4,9 @@
       <el-row style="background:#fff;padding:0;margin-bottom:32px;">
         <!-- <line-chart :chart-data="{xAxisData, yAxisData, label}" /> -->
         <!-- <h2>Prediction Plot</h2> -->
-        <line-chart2 :chart-data="future" />
+        <line-chart2 :chart-data="getFuture" />
         <!-- <h2>History Plot</h2> -->
-        <line-chart2 :chart-data="past" />
+        <line-chart2 :chart-data="getPast" />
       </el-row>
     </div>
     <div>
@@ -97,16 +97,33 @@ export default {
     past: {
       immediate: true,
       handler() {
-        console.log()
-        localStorage.setItem('past', this.past)
+        if (typeof this.past !== 'undefined')
+          localStorage.setItem('past', JSON.stringify(this.past))
       }
     },
     future: {
       immediate: true,
       handler() {
-        localStorage.setItem('future', this.future)
+        if (typeof this.future !== 'undefined')
+          localStorage.setItem('future', JSON.stringify(this.future))
       }
     },
+  },
+  computed: {
+    getPast() {
+      if (typeof this.past !== 'undefined') {
+        return this.past
+      } else {
+        return JSON.parse(localStorage.getItem('past'))
+      }
+    },
+    getFuture() {
+      if (typeof this.future !== 'undefined') {
+        return this.future
+      } else {
+        return JSON.parse(localStorage.getItem('future'))
+      }
+    }
   },
   // mounted() {
   //   this.past = localStorage.getItem('past');
