@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="dashboard-editor-container">
-      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-row style="background:#fff;padding:0;margin-bottom:32px;">
         <!-- <line-chart :chart-data="{xAxisData, yAxisData, label}" /> -->
-        <h2>Prediction Plot</h2>
-        <line-chart :chart-data="future" />
-        <h2>History Plot</h2>
-        <line-chart :chart-data="past" />
+        <!-- <h2>Prediction Plot</h2> -->
+        <line-chart2 :chart-data="getFuture" />
+        <!-- <h2>History Plot</h2> -->
+        <line-chart2 :chart-data="getPast" />
       </el-row>
     </div>
     <div>
@@ -16,6 +16,7 @@
 
 <script>
 import LineChart from '@/views/dashboard/admin/components/LineChart'
+import LineChart2 from '@/views/plotTest/components/LineChart2'
 import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from '@/views/dashboard/admin/components/PanelGroup'
 import RaddarChart from '@/views/dashboard/admin/components/RaddarChart'
@@ -41,6 +42,7 @@ export default {
     GithubCorner,
     PanelGroup,
     LineChart,
+    LineChart2,
     RaddarChart,
     PieChart,
     BarChart,
@@ -49,7 +51,6 @@ export default {
     BoxCard
   },
   props: {
-    twoLines: true,
     past: {
       xAxisData: {
         default: ['a', 'x', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -76,21 +77,6 @@ export default {
         default: '#999997'
       }
     },
-    past_predict: {
-      xAxisData: {
-        default: [120, 82, 91, 154, 162, 140, 145,230]
-      },
-      yAxisData: {
-        default: ['a', 'x', 'c', 'd', 'e', 'f', 'g', 'h']
-      },
-      label: {
-        default: 'Future'
-      },
-      colorPicked: {
-        default: '#999997'
-      }
-    },
-
     future: {
       xAxisData: {
         default: [120, 82, 91, 154, 162, 140, 145,230]
@@ -107,6 +93,42 @@ export default {
     }
 
   },
+  watch: {
+    past: {
+      immediate: true,
+      handler() {
+        if (typeof this.past !== 'undefined')
+          localStorage.setItem('past', JSON.stringify(this.past))
+      }
+    },
+    future: {
+      immediate: true,
+      handler() {
+        if (typeof this.future !== 'undefined')
+          localStorage.setItem('future', JSON.stringify(this.future))
+      }
+    },
+  },
+  computed: {
+    getPast() {
+      if (typeof this.past !== 'undefined') {
+        return this.past
+      } else {
+        return JSON.parse(localStorage.getItem('past'))
+      }
+    },
+    getFuture() {
+      if (typeof this.future !== 'undefined') {
+        return this.future
+      } else {
+        return JSON.parse(localStorage.getItem('future'))
+      }
+    }
+  },
+  // mounted() {
+  //   this.past = localStorage.getItem('past');
+  //   this.future = localStorage.getItem('future');
+  // },
   data() {
     return {
       lineChartData: lineChartData.newVisitis
