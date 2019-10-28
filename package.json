@@ -43,6 +43,9 @@
     "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.7",
     "@xkeshi/image-compressor": "^0.5.3",
     "axios": "0.18.1",
     "bootstrap": "^4.3.1",
