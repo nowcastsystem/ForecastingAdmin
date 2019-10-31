@@ -361,7 +361,7 @@ export default {
       thread: 3,
       name: 'file',
       postAction: '/upload/post',
-      putAction: 'http://localhost:8010/uploader',
+      putAction: 'http://localhost:8010/dev-api/uploader',
       headers: {
         'X-Csrf-Token': 'xxxx',
       },
