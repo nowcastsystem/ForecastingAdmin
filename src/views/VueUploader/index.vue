@@ -152,6 +152,100 @@
           </tbody>
         </table>
       </div>
+
+      <div class="table-responsive" style="height: 400px;">
+        <table class="table table-hover table-dark" style="color: white">
+          <thead style="background-color: #313436;">
+            <tr>
+              <th>#</th>
+              <th>Thumb</th>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Speed</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="!files.length">
+              <td colspan="7">
+                <div class="text-center p-5">
+                  <h4>No files uploaded related to this task</h4>
+                </div>
+              </td>
+            </tr>
+            <tr v-for="(file, index) in files" :key="file.id">
+              <td>{{index}}</td>
+              <td>
+                <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
+                <span v-else>No Image</span>
+              </td>
+              <td>
+                <div class="filename">{{file.name}}</div>
+                <div class="progress" v-if="file.active || file.progress !== '0.00'">
+                  <div
+                    :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}"
+                    role="progressbar"
+                    :style="{width: file.progress + '%'}"
+                  >{{file.progress}}%</div>
+                </div>
+              </td>
+              <td>{{file.size | formatSize}}</td>
+              <td>{{file.speed | formatSize}}</td>
+
+              <!-- <td v-if="file.error">{{file.error}}</td> -->
+              <td v-if="file.error">fail: wrong format</td>
+              <td v-else-if="file.success">success</td>
+              <td v-else-if="file.active">active</td>
+              <td v-else></td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button">Action</button>
+                  <div class="dropdown-menu">
+                    <a
+                      :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing'}"
+                      href="#"
+                      @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)"
+                    >Edit</a>
+                    <a
+                      :class="{'dropdown-item': true, disabled: !file.active}"
+                      href="#"
+                      @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"
+                    >Cancel</a>
+
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      v-if="file.active"
+                      @click.prevent="$refs.upload.update(file, {active: false})"
+                    >Abort</a>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      v-else-if="file.error && file.error !== 'compressing' && $refs.upload.features.html5"
+                      @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})"
+                    >Retry upload</a>
+                    <a
+                      :class="{'dropdown-item': true, disabled: file.success || file.error === 'compressing'}"
+                      href="#"
+                      v-else
+                      @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})"
+                    >Upload</a>
+
+                    <div class="dropdown-divider"></div>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click.prevent="$refs.upload.remove(file)"
+                    >Remove</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="example-foorer">
         <!--       <div class="footer-status float-right">
         Drop: {{$refs.upload ? $refs.upload.drop : false}},
@@ -555,7 +649,10 @@ export default {
         show: false,
         name: ""
       },
-      currentTask: "Task 1"
+      currentTask: "Task 1",
+      taskList: {
+        "Task 1": []
+      }
     };
   },
   watch: {
