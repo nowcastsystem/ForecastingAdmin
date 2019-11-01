@@ -5,8 +5,34 @@
     <i class="fa fa-cog" aria-hidden="true"></i>
     Options
   </button> -->
-  <h1 id="example-title" class="example-title" style="color: white">Data Uploader</h1>
+  <div style="overflow: hidden;">
+  <h1 id="example-title" class="example-title" style="color: white; display: inline-block; float: left;">Data Uploader</h1>
+  <a href="#" style="display: inline-block; margin-top: 23px; margin-left: 2px" class="badge badge-light" data-toggle="modal" data-target="#exampleModal">Format Guide</a>
+  <!-- <button type="button" class="btn btn-outline-primary" style="display: inline !important;" data-toggle="modal" data-target="#exampleModal">
+  Format Guide
+  </button> -->
+  </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Example Data Format</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span>There should be two columns of data. The first column should be date and the second one should be real numbers. The file should be a .csv file.</span>
+          <img src="@/views/VueUploader/data-example.png">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
     <h3>Drop files to upload</h3>
   </div>
@@ -335,7 +361,7 @@ export default {
       thread: 3,
       name: 'file',
       postAction: '/upload/post',
-      putAction: 'http://localhost:8010/uploader',
+      putAction: window.location.origin + '/dev-api/uploader',
       headers: {
         'X-Csrf-Token': 'xxxx',
       },
@@ -589,8 +615,8 @@ export default {
 }
 .example-full .example-foorer {
   padding: .5rem 0;
-  border-top: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 }
 .example-full .edit-image img {
   max-width: 100%;
