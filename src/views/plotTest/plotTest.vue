@@ -1,9 +1,15 @@
 <template>
   <div>
     <div class="dashboard-editor-container">
-      <el-row style="background:#fff;padding:0;margin-bottom:32px;">
+      <el-row style="background:black;padding:0;margin-bottom:32px;">
         <!-- <line-chart :chart-data="{xAxisData, yAxisData, label}" /> -->
         <!-- <h2>Prediction Plot</h2> -->
+        <a href="/dev-api/downloadPrediction" download>
+          <button type="button" class="btn btn-info" style="margin: 10px">Download Predicted Data</button>
+          
+        </a>
+        <span style="color: yellow">Please download your predicted data. It will be deleted once the browser closes.</span>
+        
         <line-chart2 :chart-data="getFuture" />
         <!-- <h2>History Plot</h2> -->
         <line-chart2 :chart-data="getPast" />
@@ -137,7 +143,28 @@ export default {
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
-    }
+    },
+
+    // onDownloadPredict() {
+    //   downloadPredict().then(response => {
+    //     var token = response["token"];
+    //     var future = response["future"];
+    //     var past = response["past"];
+    //     var past_predict = response["past_predict"];
+
+    //     // if the response from the server indicating that it's running the analysis, then redirect to a loading view
+    //     if (token == "success") {
+    //       // this.$router.push({ name: "plot" })
+    //       this.$router.push({
+    //         name: "plotTest",
+    //         params: {
+    //           past,
+    //           future
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
   }
 }
 
