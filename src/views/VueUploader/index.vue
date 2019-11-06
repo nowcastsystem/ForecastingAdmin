@@ -1,6 +1,8 @@
 <template>
   <div class="example-full">
-    <taskList :setFileTask="setFileTask"></taskList>
+    <div hidden=true>
+      <taskList :setFileTask="setFileTask"></taskList>
+    </div>
     <!--   <button type="button" class="btn btn-danger float-right btn-is-option" @click.prevent="isOption = !isOption">
     <i class="fa fa-cog" aria-hidden="true"></i>
     Options
