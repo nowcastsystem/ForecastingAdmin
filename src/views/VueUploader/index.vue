@@ -807,6 +807,7 @@ export default {
       }
       if (this.$refs.upload.value) {
         this.showUploader = false;
+        this.drop = false;
       }
       if (this.$refs.upload.value.length > 0) {
         console.log("upload successfully");
