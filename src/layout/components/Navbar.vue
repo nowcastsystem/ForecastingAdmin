@@ -2,7 +2,7 @@
   <div class="navbar">
     <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
@@ -85,6 +85,7 @@ export default {
   background: #19191a;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   padding: 0;
+  float: right;
 
   .hamburger-container {
     line-height: 46px;
