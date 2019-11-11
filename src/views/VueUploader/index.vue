@@ -601,7 +601,7 @@ export default {
   data() {
     return {
       showAnalyze: false,
-      showUploader: true,
+      showUploader: false,
       files: [],
       accept: "",
       extensions: "",
@@ -807,6 +807,7 @@ export default {
       }
       if (this.$refs.upload.value) {
         this.showUploader = false;
+        this.drop = false;
       }
       if (this.$refs.upload.value.length > 0) {
         console.log("upload successfully");
@@ -935,7 +936,6 @@ export default {
   padding: 0.5rem 0;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  float: right;
   margin-top: -50px;
   display: flex;
 }
