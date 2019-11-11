@@ -1,6 +1,6 @@
 <template>
   <div class="example-full">
-    <div hidden=true>
+    <div hidden="true">
       <taskList :setFileTask="setFileTask"></taskList>
     </div>
     <!--   <button type="button" class="btn btn-danger float-right btn-is-option" @click.prevent="isOption = !isOption">
@@ -60,8 +60,6 @@
         <table class="table table-hover table-dark" style="color: white">
           <thead style="background-color: #313436;">
             <tr>
-              <th>#</th>
-              <th>Thumb</th>
               <th>Name</th>
               <th>Size</th>
               <th>Speed</th>
@@ -82,11 +80,6 @@
               </td>
             </tr>
             <tr v-for="(file, index) in files" :key="file.id">
-              <td>{{index}}</td>
-              <td>
-                <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
-                <span v-else>No Image</span>
-              </td>
               <td>
                 <div class="filename">{{file.name}}</div>
                 <div class="progress" v-if="file.active || file.progress !== '0.00'">
@@ -152,14 +145,15 @@
           </tbody>
         </table>
       </div>
-      <div class="example-foorer">
+
+      <div class="example-foorer" v-show="showFooter">
         <!--       <div class="footer-status float-right">
         Drop: {{$refs.upload ? $refs.upload.drop : false}},
         Active: {{$refs.upload ? $refs.upload.active : false}},
         Uploaded: {{$refs.upload ? $refs.upload.uploaded : true}},
         Drop active: {{$refs.upload ? $refs.upload.dropActive : false}}
         </div>-->
-        <div class="btn-group">
+        <div class="btn-group" v-show="showUploader">
           <file-upload
             class="btn btn-primary dropdown-toggle"
             :post-action="postAction"
@@ -198,21 +192,23 @@
           <i class="fa fa-arrow-up" aria-hidden="true"></i>
           Start Upload
         </button>
-        <button
-          type="button"
-          class="btn btn-warning"
-          v-if="!$refs.upload || !$refs.upload.active"
-          @click.prevent="onSendAnalyzeRequest"
-        >Analyze</button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          v-else
-          @click.prevent="$refs.upload.active = false"
-        >
-          <i class="fa fa-stop" aria-hidden="true"></i>
-          Stop Upload
-        </button>
+        <div class="analyze-block" v-show="showAnalyze">
+          <button
+            type="button"
+            class="btn btn-warning"
+            v-if="!$refs.upload || !$refs.upload.active"
+            @click.prevent="onSendAnalyzeRequest"
+          >Analyze</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            v-else
+            @click.prevent="$refs.upload.active = false"
+          >
+            <i class="fa fa-stop" aria-hidden="true"></i>
+            Stop Upload
+          </button>
+        </div>
       </div>
     </div>
 
@@ -520,6 +516,9 @@ export default {
   },
   data() {
     return {
+      showFooter: false,
+      showAnalyze: false,
+      showUploader: false,
       files: [],
       accept: "",
       extensions: "",
@@ -533,9 +532,9 @@ export default {
       dropDirectory: true,
       addIndex: false,
       thread: 3,
-      name: 'file',
-      postAction: '/upload/post',
-      putAction: window.location.origin + '/dev-api/uploader',
+      name: "file",
+      postAction: "/upload/post",
+      putAction: window.location.origin + "/dev-api/uploader",
       headers: {
         "X-Csrf-Token": "xxxx"
       },
@@ -555,9 +554,21 @@ export default {
         show: false,
         name: ""
       },
-      currentTask: "Task 1"
+      currentTask: "Task 1",
+      taskList: {
+        "Task 1": []
+      }
     };
   },
+  // check if files existed
+  beforeMount() {
+    if (!this.$refs.upload) {
+      this.$refs.upload = {
+        uploadedFiles: []
+      };
+    }
+  },
+  // beforeUpdate: {},
   watch: {
     "editFile.show"(newValue, oldValue) {
       // 关闭了 自动删除 error
@@ -711,6 +722,16 @@ export default {
           this.$refs.upload.active = true;
         }
       }
+      if (this.$refs.upload.value) {
+        this.showUploader = false;
+        this.drop = false;
+        this.showFooter = true;
+      }
+      if (this.$refs.upload.value.length > 0) {
+        console.log("upload successfully");
+        this.showAnalyze = true;
+      }
+      console.log("this ref upload", this.$refs.upload.value.length);
     },
     alert(message) {
       alert(message);
@@ -833,6 +854,12 @@ export default {
   padding: 0.5rem 0;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
+  margin-top: -50px;
+  display: flex;
+}
+.analyze-block {
+  margin-left: 10px;
+  display: flex;
 }
 .example-full .edit-image img {
   max-width: 100%;
