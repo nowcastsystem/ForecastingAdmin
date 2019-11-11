@@ -146,7 +146,7 @@
         </table>
       </div>
 
-      <div class="example-foorer">
+      <div class="example-foorer" v-show="showFooter">
         <!--       <div class="footer-status float-right">
         Drop: {{$refs.upload ? $refs.upload.drop : false}},
         Active: {{$refs.upload ? $refs.upload.active : false}},
@@ -516,6 +516,7 @@ export default {
   },
   data() {
     return {
+      showFooter: false,
       showAnalyze: false,
       showUploader: false,
       files: [],
@@ -724,6 +725,7 @@ export default {
       if (this.$refs.upload.value) {
         this.showUploader = false;
         this.drop = false;
+        this.showFooter = true;
       }
       if (this.$refs.upload.value.length > 0) {
         console.log("upload successfully");
