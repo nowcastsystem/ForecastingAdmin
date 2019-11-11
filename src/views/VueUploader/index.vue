@@ -1,6 +1,6 @@
 <template>
   <div class="example-full">
-    <div hidden=true>
+    <div hidden="true">
       <taskList :setFileTask="setFileTask"></taskList>
     </div>
     <!--   <button type="button" class="btn btn-danger float-right btn-is-option" @click.prevent="isOption = !isOption">
@@ -152,7 +152,14 @@
           </tbody>
         </table>
       </div>
-
+      <!-- uploaded file list -->
+      <div style="overflow: hidden;">
+        <h1
+          id="example-title"
+          class="example-title"
+          style="color: white; display: inline-block; float: left;"
+        >Uploaded File(s)</h1>
+      </div>
       <div class="table-responsive" style="height: 400px;">
         <table class="table table-hover table-dark" style="color: white">
           <thead style="background-color: #313436;">
@@ -161,7 +168,6 @@
               <th>Thumb</th>
               <th>Name</th>
               <th>Size</th>
-              <th>Speed</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -174,7 +180,7 @@
                 </div>
               </td>
             </tr>
-            <tr v-for="(file, index) in files" :key="file.id">
+            <tr v-for="(file, index) in $refs.upload.value" :key="file.id">
               <td>{{index}}</td>
               <td>
                 <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
@@ -182,16 +188,8 @@
               </td>
               <td>
                 <div class="filename">{{file.name}}</div>
-                <div class="progress" v-if="file.active || file.progress !== '0.00'">
-                  <div
-                    :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}"
-                    role="progressbar"
-                    :style="{width: file.progress + '%'}"
-                  >{{file.progress}}%</div>
-                </div>
               </td>
               <td>{{file.size | formatSize}}</td>
-              <td>{{file.speed | formatSize}}</td>
 
               <!-- <td v-if="file.error">{{file.error}}</td> -->
               <td v-if="file.error">fail: wrong format</td>
@@ -253,7 +251,7 @@
         Uploaded: {{$refs.upload ? $refs.upload.uploaded : true}},
         Drop active: {{$refs.upload ? $refs.upload.dropActive : false}}
         </div>-->
-        <div class="btn-group">
+        <div class="btn-group" v-show="showUploader">
           <file-upload
             class="btn btn-primary dropdown-toggle"
             :post-action="postAction"
@@ -292,21 +290,23 @@
           <i class="fa fa-arrow-up" aria-hidden="true"></i>
           Start Upload
         </button>
-        <button
-          type="button"
-          class="btn btn-warning"
-          v-if="!$refs.upload || !$refs.upload.active"
-          @click.prevent="onSendAnalyzeRequest"
-        >Analyze</button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          v-else
-          @click.prevent="$refs.upload.active = false"
-        >
-          <i class="fa fa-stop" aria-hidden="true"></i>
-          Stop Upload
-        </button>
+        <div class="analyze-block" v-show="showAnalyze">
+          <button
+            type="button"
+            class="btn btn-warning"
+            v-if="!$refs.upload || !$refs.upload.active"
+            @click.prevent="onSendAnalyzeRequest"
+          >Analyze</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            v-else
+            @click.prevent="$refs.upload.active = false"
+          >
+            <i class="fa fa-stop" aria-hidden="true"></i>
+            Stop Upload
+          </button>
+        </div>
       </div>
     </div>
 
@@ -614,6 +614,8 @@ export default {
   },
   data() {
     return {
+      showAnalyze: false,
+      showUploader: true,
       files: [],
       accept: "",
       extensions: "",
@@ -627,9 +629,9 @@ export default {
       dropDirectory: true,
       addIndex: false,
       thread: 3,
-      name: 'file',
-      postAction: '/upload/post',
-      putAction: window.location.origin + '/dev-api/uploader',
+      name: "file",
+      postAction: "/upload/post",
+      putAction: window.location.origin + "/dev-api/uploader",
       headers: {
         "X-Csrf-Token": "xxxx"
       },
@@ -655,6 +657,15 @@ export default {
       }
     };
   },
+  // check if files existed
+  beforeMount() {
+    if (!this.$refs.upload) {
+      this.$refs.upload = {
+        uploadedFiles: []
+      };
+    }
+  },
+  // beforeUpdate: {},
   watch: {
     "editFile.show"(newValue, oldValue) {
       // 关闭了 自动删除 error
@@ -808,6 +819,14 @@ export default {
           this.$refs.upload.active = true;
         }
       }
+      if (this.$refs.upload.value) {
+        this.showUploader = false;
+      }
+      if (this.$refs.upload.value.length > 0) {
+        console.log("upload successfully");
+        this.showAnalyze = true;
+      }
+      console.log("this ref upload", this.$refs.upload.value.length);
     },
     alert(message) {
       alert(message);
@@ -930,6 +949,13 @@ export default {
   padding: 0.5rem 0;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
+  float: right;
+  margin-top: -50px;
+  display: flex;
+}
+.analyze-block {
+  margin-left: 10px;
+  display: flex;
 }
 .example-full .edit-image img {
   max-width: 100%;
