@@ -601,7 +601,7 @@ export default {
   data() {
     return {
       showAnalyze: false,
-      showUploader: true,
+      showUploader: false,
       files: [],
       accept: "",
       extensions: "",
@@ -935,7 +935,6 @@ export default {
   padding: 0.5rem 0;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  float: right;
   margin-top: -50px;
   display: flex;
 }
