@@ -1,6 +1,6 @@
 <template>
   <div class="example-full">
-    <div hidden=true>
+    <div hidden="true">
       <taskList :setFileTask="setFileTask"></taskList>
     </div>
     <!--   <button type="button" class="btn btn-danger float-right btn-is-option" @click.prevent="isOption = !isOption">
@@ -60,8 +60,6 @@
         <table class="table table-hover table-dark" style="color: white">
           <thead style="background-color: #313436;">
             <tr>
-              <th>#</th>
-              <th>Thumb</th>
               <th>Name</th>
               <th>Size</th>
               <th>Speed</th>
@@ -82,11 +80,6 @@
               </td>
             </tr>
             <tr v-for="(file, index) in files" :key="file.id">
-              <td>{{index}}</td>
-              <td>
-                <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
-                <span v-else>No Image</span>
-              </td>
               <td>
                 <div class="filename">{{file.name}}</div>
                 <div class="progress" v-if="file.active || file.progress !== '0.00'">
@@ -152,6 +145,91 @@
           </tbody>
         </table>
       </div>
+      <!-- uploaded file list -->
+      <div style="overflow: hidden;">
+        <h1
+          id="example-title"
+          class="example-title"
+          style="color: white; display: inline-block; float: left;"
+        >Uploaded File(s)</h1>
+      </div>
+      <div class="table-responsive" style="height: 400px;">
+        <table class="table table-hover table-dark" style="color: white">
+          <thead style="background-color: #313436;">
+            <tr>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="!files.length">
+              <td colspan="7">
+                <div class="text-center p-5">
+                  <h4>No files uploaded related to this task</h4>
+                </div>
+              </td>
+            </tr>
+            <tr v-for="(file, index) in $refs.upload.value" :key="file.id">
+              <td>
+                <div class="filename">{{file.name}}</div>
+              </td>
+              <td>{{file.size | formatSize}}</td>
+
+              <!-- <td v-if="file.error">{{file.error}}</td> -->
+              <td v-if="file.error">fail: wrong format</td>
+              <td v-else-if="file.success">success</td>
+              <td v-else-if="file.active">active</td>
+              <td v-else></td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button">Action</button>
+                  <div class="dropdown-menu">
+                    <a
+                      :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing'}"
+                      href="#"
+                      @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)"
+                    >Edit</a>
+                    <a
+                      :class="{'dropdown-item': true, disabled: !file.active}"
+                      href="#"
+                      @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"
+                    >Cancel</a>
+
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      v-if="file.active"
+                      @click.prevent="$refs.upload.update(file, {active: false})"
+                    >Abort</a>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      v-else-if="file.error && file.error !== 'compressing' && $refs.upload.features.html5"
+                      @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})"
+                    >Retry upload</a>
+                    <a
+                      :class="{'dropdown-item': true, disabled: file.success || file.error === 'compressing'}"
+                      href="#"
+                      v-else
+                      @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})"
+                    >Upload</a>
+
+                    <div class="dropdown-divider"></div>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click.prevent="$refs.upload.remove(file)"
+                    >Remove</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="example-foorer">
         <!--       <div class="footer-status float-right">
         Drop: {{$refs.upload ? $refs.upload.drop : false}},
@@ -159,7 +237,7 @@
         Uploaded: {{$refs.upload ? $refs.upload.uploaded : true}},
         Drop active: {{$refs.upload ? $refs.upload.dropActive : false}}
         </div>-->
-        <div class="btn-group">
+        <div class="btn-group" v-show="showUploader">
           <file-upload
             class="btn btn-primary dropdown-toggle"
             :post-action="postAction"
@@ -198,21 +276,23 @@
           <i class="fa fa-arrow-up" aria-hidden="true"></i>
           Start Upload
         </button>
-        <button
-          type="button"
-          class="btn btn-warning"
-          v-if="!$refs.upload || !$refs.upload.active"
-          @click.prevent="onSendAnalyzeRequest"
-        >Analyze</button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          v-else
-          @click.prevent="$refs.upload.active = false"
-        >
-          <i class="fa fa-stop" aria-hidden="true"></i>
-          Stop Upload
-        </button>
+        <div class="analyze-block" v-show="showAnalyze">
+          <button
+            type="button"
+            class="btn btn-warning"
+            v-if="!$refs.upload || !$refs.upload.active"
+            @click.prevent="onSendAnalyzeRequest"
+          >Analyze</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            v-else
+            @click.prevent="$refs.upload.active = false"
+          >
+            <i class="fa fa-stop" aria-hidden="true"></i>
+            Stop Upload
+          </button>
+        </div>
       </div>
     </div>
 
@@ -520,6 +600,8 @@ export default {
   },
   data() {
     return {
+      showAnalyze: false,
+      showUploader: true,
       files: [],
       accept: "",
       extensions: "",
@@ -533,9 +615,9 @@ export default {
       dropDirectory: true,
       addIndex: false,
       thread: 3,
-      name: 'file',
-      postAction: '/upload/post',
-      putAction: window.location.origin + '/dev-api/uploader',
+      name: "file",
+      postAction: "/upload/post",
+      putAction: window.location.origin + "/dev-api/uploader",
       headers: {
         "X-Csrf-Token": "xxxx"
       },
@@ -555,9 +637,21 @@ export default {
         show: false,
         name: ""
       },
-      currentTask: "Task 1"
+      currentTask: "Task 1",
+      taskList: {
+        "Task 1": []
+      }
     };
   },
+  // check if files existed
+  beforeMount() {
+    if (!this.$refs.upload) {
+      this.$refs.upload = {
+        uploadedFiles: []
+      };
+    }
+  },
+  // beforeUpdate: {},
   watch: {
     "editFile.show"(newValue, oldValue) {
       // 关闭了 自动删除 error
@@ -711,6 +805,14 @@ export default {
           this.$refs.upload.active = true;
         }
       }
+      if (this.$refs.upload.value) {
+        this.showUploader = false;
+      }
+      if (this.$refs.upload.value.length > 0) {
+        console.log("upload successfully");
+        this.showAnalyze = true;
+      }
+      console.log("this ref upload", this.$refs.upload.value.length);
     },
     alert(message) {
       alert(message);
@@ -833,6 +935,13 @@ export default {
   padding: 0.5rem 0;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
+  float: right;
+  margin-top: -50px;
+  display: flex;
+}
+.analyze-block {
+  margin-left: 10px;
+  display: flex;
 }
 .example-full .edit-image img {
   max-width: 100%;
