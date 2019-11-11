@@ -60,8 +60,6 @@
         <table class="table table-hover table-dark" style="color: white">
           <thead style="background-color: #313436;">
             <tr>
-              <th>#</th>
-              <th>Thumb</th>
               <th>Name</th>
               <th>Size</th>
               <th>Speed</th>
@@ -82,11 +80,6 @@
               </td>
             </tr>
             <tr v-for="(file, index) in files" :key="file.id">
-              <td>{{index}}</td>
-              <td>
-                <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
-                <span v-else>No Image</span>
-              </td>
               <td>
                 <div class="filename">{{file.name}}</div>
                 <div class="progress" v-if="file.active || file.progress !== '0.00'">
@@ -164,8 +157,6 @@
         <table class="table table-hover table-dark" style="color: white">
           <thead style="background-color: #313436;">
             <tr>
-              <th>#</th>
-              <th>Thumb</th>
               <th>Name</th>
               <th>Size</th>
               <th>Status</th>
@@ -181,11 +172,6 @@
               </td>
             </tr>
             <tr v-for="(file, index) in $refs.upload.value" :key="file.id">
-              <td>{{index}}</td>
-              <td>
-                <img v-if="file.thumb" :src="file.thumb" width="40" height="auto" />
-                <span v-else>No Image</span>
-              </td>
               <td>
                 <div class="filename">{{file.name}}</div>
               </td>
