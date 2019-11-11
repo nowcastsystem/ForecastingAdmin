@@ -43,7 +43,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <span>There should be two columns of data. The first column should be date and the second one should be real numbers. The file should be a .csv file.</span>
+            <span>There should be two columns of data. The first column should be date and/or time: mm/dd/yyyy hh:mm:ss. The second column should be real numbers. The file should be a .csv file.</span>
             <img src="@/views/VueUploader/data-example.png" />
           </div>
           <div class="modal-footer">
