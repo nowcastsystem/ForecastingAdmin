@@ -196,6 +196,8 @@ export default {
             }
         },
         grid: {
+            left: 60,
+            right: 40,
             top: 80
         },
         tooltip: {
