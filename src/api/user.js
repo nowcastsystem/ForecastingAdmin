@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import store from '@/store'
 
 export function login(data) {
   return request({
@@ -26,9 +27,11 @@ export function logout() {
 }
 
 export function sendAnalyzeRequest(token) {
+  const username = store.getters.username
   return request({
     url: '/dev-api/testpredict',
     method: 'get',
+    params: {username}
     // baseURL: 'http://localhost:8010',
     // authorization: token,
     // params: { token }
