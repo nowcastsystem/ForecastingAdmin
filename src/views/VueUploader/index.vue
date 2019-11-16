@@ -507,6 +507,8 @@ import ImageCompressor from "@xkeshi/image-compressor";
 import FileUpload from "vue-upload-component";
 import { sendAnalyzeRequest } from "@/api/user";
 import taskList from "@/views/VueUploader/components/taskList";
+import store from '@/store'
+
 // import 'bootstrap'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 export default {
@@ -515,6 +517,8 @@ export default {
     taskList
   },
   data() {
+    console.log("Vue Uploader~~~~~~")
+    console.log(store.getters.username)
     return {
       showFooter: false,
       showAnalyze: false,
@@ -539,7 +543,8 @@ export default {
         "X-Csrf-Token": "xxxx"
       },
       data: {
-        _csrf_token: "xxxxxx"
+        _csrf_token: "xxxxxx",
+        username: store.getters.username
       },
       autoCompress: 1024 * 1024,
       uploadAuto: false,
