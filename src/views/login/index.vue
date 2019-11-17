@@ -45,8 +45,10 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Log in</el-button>
+      <a href="https://forms.gle/PUUx1zPggtpC3xTv6">
+        <button type="button" class="btn btn-info" style="width:100%;margin-bottom:30px;">Sign up</button>
+      </a>
       <!-- <div style="position:relative">
         <div class="tips">
           <span>Username : admin</span>

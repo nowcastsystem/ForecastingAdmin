@@ -48,6 +48,9 @@
             <img src="@/views/VueUploader/data-example3.png" style="width: 80%"/>
           </div>
           <div class="modal-footer">
+            <a href="/dev-api/DownloadSampleHandler" download>
+              <button type="button" class="btn btn-info" style="margin: 10px">Download Sample Data</button>
+            </a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -508,6 +511,8 @@ import ImageCompressor from "@xkeshi/image-compressor";
 import FileUpload from "vue-upload-component";
 import { sendAnalyzeRequest } from "@/api/user";
 import taskList from "@/views/VueUploader/components/taskList";
+import store from '@/store'
+
 // import 'bootstrap'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 export default {
@@ -516,6 +521,8 @@ export default {
     taskList
   },
   data() {
+    console.log("Vue Uploader~~~~~~")
+    console.log(store.getters.username)
     return {
       showFooter: false,
       showAnalyze: false,
@@ -540,7 +547,8 @@ export default {
         "X-Csrf-Token": "xxxx"
       },
       data: {
-        _csrf_token: "xxxxxx"
+        _csrf_token: "xxxxxx",
+        username: store.getters.username
       },
       autoCompress: 1024 * 1024,
       uploadAuto: false,
