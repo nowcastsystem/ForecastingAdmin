@@ -47,6 +47,9 @@
             <img src="@/views/VueUploader/data-example2.png" />
           </div>
           <div class="modal-footer">
+            <a href="/dev-api/DownloadSampleHandler" download>
+              <button type="button" class="btn btn-info" style="margin: 10px">Download Sample Data</button>
+            </a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
