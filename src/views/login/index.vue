@@ -171,6 +171,7 @@ export default {
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
+              localStorage.setItem('username', JSON.stringify(this.loginForm.username))
             })
             .catch(() => {
               alert("Password is incorrect")

@@ -27,7 +27,8 @@ export function logout() {
 }
 
 export function sendAnalyzeRequest(token) {
-  const username = store.getters.username
+  //const username = store.getters.username
+  const username = JSON.parse(localStorage.getItem('username'))
   return request({
     url: '/dev-api/testpredict',
     method: 'get',

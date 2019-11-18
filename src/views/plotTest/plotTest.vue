@@ -1,12 +1,14 @@
 <template>
   <div>
+    <a href="/vueUploader">
+        <button type="button" class="trans-btn" style="margin-left:40px"> <svg-icon icon-class="arrow-left"/> Make New Prediction</button>
+      </a>
     <div class="dashboard-editor-container">
       <el-row style="background:black;padding:0;margin-bottom:32px;">
         <!-- <line-chart :chart-data="{xAxisData, yAxisData, label}" /> -->
         <!-- <h2>Prediction Plot</h2> -->
         <a href="/dev-api/downloadPrediction" download>
           <button type="button" class="btn btn-info" style="margin: 10px">Download Predicted Data</button>
-          
         </a>
         <span style="color: yellow">Please download your predicted data. It will be deleted once the browser closes.</span>
         

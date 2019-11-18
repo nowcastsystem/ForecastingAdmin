@@ -190,7 +190,7 @@
         <button
           type="button"
           class="btn btn-success"
-          v-if="!$refs.upload || !$refs.upload.active"
+          v-if="!$refs.upload || !$refs.upload.active && !showAnalyze"
           @click.prevent="$refs.upload.active = true"
         >
           <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -522,7 +522,7 @@ export default {
   },
   data() {
     console.log("Vue Uploader~~~~~~")
-    console.log(store.getters.username)
+    console.log(localStorage.getItem('username'))
     return {
       showFooter: false,
       showAnalyze: false,
@@ -548,7 +548,8 @@ export default {
       },
       data: {
         _csrf_token: "xxxxxx",
-        username: store.getters.username
+        username: JSON.parse(localStorage.getItem('username'))
+        //username: store.getters.username
       },
       autoCompress: 1024 * 1024,
       uploadAuto: false,
