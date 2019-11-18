@@ -41,6 +41,15 @@
   @include colorBtn($yellow)
 }
 
+.trans-btn {
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  outline: none;
+}
+
 .pan-btn {
   font-size: 14px;
   color: #fff;
