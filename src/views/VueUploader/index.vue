@@ -106,7 +106,7 @@
                 <div class="btn-group">
                   <button class="btn btn-secondary btn-sm dropdown-toggle" type="button">Action</button>
                   <div class="dropdown-menu">
-                    <a
+                    <!-- <a
                       :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing'}"
                       href="#"
                       @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)"
@@ -116,7 +116,7 @@
                       href="#"
                       @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"
                     >Cancel</a>
-
+                    
                     <a
                       class="dropdown-item"
                       href="#"
@@ -134,7 +134,7 @@
                       href="#"
                       v-else
                       @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})"
-                    >Upload</a>
+                    >Upload</a> -->
 
                     <div class="dropdown-divider"></div>
                     <a
@@ -737,9 +737,16 @@ export default {
         this.drop = false;
         this.showFooter = true;
       }
-      if (this.$refs.upload.value.length > 0) {
+      if (this.$refs.upload.value.length > 0 && !this.$refs.upload.value[0].error) {
         console.log("upload successfully");
+        console.log(this.$refs.upload.value);
         this.showAnalyze = true;
+      }
+      else{
+        console.log("upload failed...")
+        console.log(this.$refs.upload.value);
+        console.log(this.$refs.upload.value[0].error);
+        this.showAnalyze = false;
       }
       console.log("this ref upload", this.$refs.upload.value.length);
     },
