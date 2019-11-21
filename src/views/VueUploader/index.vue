@@ -200,7 +200,7 @@
           <button
             type="button"
             class="btn btn-warning"
-            v-if="!$refs.upload || !$refs.upload.active"
+            v-if="!$refs.upload || !$refs.upload.active || showAnalyze"
             @click.prevent="onSendAnalyzeRequest"
           >Analyze</button>
           <button
@@ -684,6 +684,9 @@ export default {
       if(!newFile) {
         this.fileRemoved = true;
         this.showAnalyze = false;
+      }
+      else {
+        this.fileRemoved = false;
       }
       if (newFile) {
         newFile.task = this.currentTask;
