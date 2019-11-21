@@ -106,7 +106,7 @@
                 <div class="btn-group">
                   <button class="btn btn-secondary btn-sm dropdown-toggle" type="button">Action</button>
                   <div class="dropdown-menu">
-                    <a
+                    <!-- <a
                       :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing'}"
                       href="#"
                       @click.prevent="file.active || file.success || file.error === 'compressing' ? false :  onEditFileShow(file)"
@@ -134,7 +134,7 @@
                       href="#"
                       v-else
                       @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})"
-                    >Upload</a>
+                    >Upload</a> -->
 
                     <div class="dropdown-divider"></div>
                     <a
@@ -527,12 +527,13 @@ export default {
       showFooter: false,
       showAnalyze: false,
       showUploader: false,
+      fileRemoved: false,
       files: [],
       accept: "",
       extensions: "",
       // extensions: ['gif', 'jpg', 'jpeg','png', 'webp'],
       // extensions: /\.(gif|jpe?g|png|webp)$/i,
-      minSize: 1024,
+      minSize: 100,
       size: 1024 * 1024 * 10,
       multiple: true,
       directory: false,
@@ -678,7 +679,12 @@ export default {
     },
     // add, update, remove File Event
     inputFile(newFile, oldFile) {
+      console.log("i am here");
       console.log(newFile, oldFile);
+      if(!newFile) {
+        this.fileRemoved = true;
+        this.showAnalyze = false;
+      }
       if (newFile) {
         newFile.task = this.currentTask;
       }
@@ -737,9 +743,16 @@ export default {
         this.drop = false;
         this.showFooter = true;
       }
-      if (this.$refs.upload.value.length > 0) {
+      if (this.$refs.upload.value.length > 0 && !this.$refs.upload.value[0].error && !this.fileRemoved) {
         console.log("upload successfully");
+        console.log(this.$refs.upload.value);
         this.showAnalyze = true;
+      }
+      else{
+        console.log("upload failed...")
+        console.log(this.$refs.upload.value);
+        console.log(this.$refs.upload.value[0].error);
+        this.showAnalyze = false;
       }
       console.log("this ref upload", this.$refs.upload.value.length);
     },
