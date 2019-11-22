@@ -139,15 +139,6 @@ export default {
         }],
         series: [{
           name: label, 
-        //   itemStyle: {
-        //     normal: {
-        //       color: colorPicked,
-        //       lineStyle: {
-        //         color: colorPicked,
-        //         width: 3
-        //       }
-        //     }
-        //   },
           smooth: true,
           type: 'line',
           data: yAxisData,
@@ -156,29 +147,8 @@ export default {
         },
         {
           name: label2, 
-        //   itemStyle: {
-        //     normal: {
-        //       color: colorPicked2,
-        //       lineStyle: {
-        //         color: colorPicked2,
-        //         width: 3
-        //       }
-        //     }
-        //   },
           smooth: true,
           type: 'line',
-        //   itemStyle: {
-        //     normal: {
-        //       color: '#3888fa',
-        //       lineStyle: {
-        //         color: '#3888fa',
-        //         width: 3
-        //       },
-        //       areaStyle: {
-        //         color: '#f3f8ff'
-        //       }
-        //     }
-        //   },
           data: yAxisData2,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'

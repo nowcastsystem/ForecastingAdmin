@@ -20,6 +20,13 @@
         data-toggle="modal"
         data-target="#exampleModal"
       >Format Guide</a>
+      <a
+        href="#"
+        style="display: inline-block; margin-top: 23px; margin-left: 2px"
+        class="badge badge-light"
+        data-toggle="modal"
+        data-target="#useCases"
+      >Use Cases</a>
       <!-- <button type="button" class="btn btn-outline-primary" style="display: inline !important;" data-toggle="modal" data-target="#exampleModal">
   Format Guide
       </button>-->
@@ -52,6 +59,55 @@
               <button type="button" class="btn btn-info" style="margin: 10px">Download Sample Data</button>
             </a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="useCases"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">PredicT Background and Use Cases</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span><b>Background</b><br/></span>
+            <span>PredicT is a time-series prediction model built on an advanced nonparametric tree ensemblealgorithm. In testing, the accuracy of predicting store traffic has proven to be highly accurate. It can be rapidly deployed to fine-tune various retail activities. <br/><br/>Notes:<br/></span>
+            <ur>
+              <li>The model should be deployed on a store-by-store basis.</li>
+              <li>The model should be rerun daily, with the most current traffic data, to enhancepredictions.</li>
+              <li>The current version provides daily predictions of store traffic. In our next release,predictions by hour by day will be added. </li>
+            </ur>
+            <span><b><br/>Use Cases</b><br/></span>
+            <span><u>Labor Optimization</u></span>
+            <ur>
+              <li>To align staff hours against predicated traffic.</li>
+              <li>To schedule staff activities based on predicated traffic.</li>
+            </ur>
+            <span><br/><u>Financial Planning</u></span>
+            <ur>
+              <li>Continuous updates of predicted daily traffic (a strong indicator of revenue) to enablerapid adjustments, such as an increase in promotions or a reduction in labor investment. </li>
+            </ur>
+            <span><br/><u>Operational</u></span>
+            <ur>
+              <li>Tune store hours of operation based on predicated traffic.</li>
+              <li>Schedule the timing of merchandise deliveries based on predicated traffic.</li>
+              <li>Adjust store inventory as traffic demand indicates.</li>
+            </ur>
+            <span><br/><u>Marketing</u></span>
+            <ur>
+              <li>Adjust mass media marketing based on predicated traffic.</li>
+              <li>Change promotional activities based on predicated traffic.</li>
+            </ur>
           </div>
         </div>
       </div>
