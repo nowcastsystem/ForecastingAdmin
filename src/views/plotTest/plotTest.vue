@@ -75,6 +75,9 @@ export default {
       twoLines: {
         default: true
       },
+      xAxisData2: {
+        default: ['a', 'x', 'c', 'd', 'e', 'f', 'g', 'h']
+      },
       yAxisData2: {
         default: [150, 96, 190, 150, 180, 160, 76,180]
       },
