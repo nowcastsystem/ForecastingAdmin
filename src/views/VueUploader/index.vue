@@ -81,11 +81,11 @@
           </div>
           <div class="modal-body">
             <span><b>Background</b><br/></span>
-            <span>PredicT is a time-series prediction model built on an advanced nonparametric tree ensemblealgorithm. In testing, the accuracy of predicting store traffic has proven to be highly accurate. It can be rapidly deployed to fine-tune various retail activities. <br/><br/>Notes:<br/></span>
+            <span>PredicT is a time-series prediction model built on an advanced nonparametric tree ensemble algorithm. In testing, the accuracy of predicting store traffic has proven to be highly accurate. It can be rapidly deployed to fine-tune various retail activities. <br/><br/>Notes:<br/></span>
             <ur>
               <li>The model should be deployed on a store-by-store basis.</li>
-              <li>The model should be rerun daily, with the most current traffic data, to enhancepredictions.</li>
-              <li>The current version provides daily predictions of store traffic. In our next release,predictions by hour by day will be added. </li>
+              <li>The model should be rerun daily, with the most current traffic data, to enhance predictions.</li>
+              <li>The current version provides daily predictions of store traffic. In our next release, predictions by hour by day will be added. </li>
             </ur>
             <span><b><br/>Use Cases</b><br/></span>
             <span><u>Labor Optimization</u></span>
@@ -95,7 +95,7 @@
             </ur>
             <span><br/><u>Financial Planning</u></span>
             <ur>
-              <li>Continuous updates of predicted daily traffic (a strong indicator of revenue) to enablerapid adjustments, such as an increase in promotions or a reduction in labor investment. </li>
+              <li>Continuous updates of predicted daily traffic (a strong indicator of revenue) to enable rapid adjustments, such as an increase in promotions or a reduction in labor investment. </li>
             </ur>
             <span><br/><u>Operational</u></span>
             <ur>
